@@ -1,22 +1,18 @@
 import bodyParser from 'body-parser';
 import { Router } from 'express';
-import { getListById } from '../db';
+import { handleGET } from './api/handler/list';
+
+const LIST_API_PATH = '/api/list/:listId';
+const HEALTH_API_PATH = '/api/health';
 
 export function apiRouter() {
   const router = Router();
   router.use(bodyParser.json());
 
-  router.get('/api/list', (req, res) => {
-    res.json(getListById("!"));
-  });
+  router.get(LIST_API_PATH, handleGET);
 
-  router.get('/api/list/:listId', (req, res) => {
-    const listId = req.params.listId;
-    res.json(getListById(listId));
-  });
-
-  router.post('/api/set-user', (req, res) => {
-    res.send(`ok`);
+  router.post(HEALTH_API_PATH, (req, res) => {
+    res.json({ success: true });
   });
 
   return router;
