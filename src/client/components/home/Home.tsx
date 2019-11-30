@@ -18,7 +18,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 interface IState {
   list: IListDTO;
-  userInput : string,
+  userInput: string;
   isLoading: boolean;
 }
 
@@ -27,7 +27,7 @@ export class Home extends React.Component<any, IState> {
     super(props);
     this.state = {
       list: null,
-      userInput : "",
+      userInput: '',
       isLoading: true,
     };
   }
@@ -35,62 +35,62 @@ export class Home extends React.Component<any, IState> {
   public componentDidMount = async () => {
     const listId = this.props.match.params.listId;
     if (listId) {
-        const list = await getListById(listId);
-        this.setState({ list: list, isLoading: false });
+      const list = await getListById(listId);
+      this.setState({ list: list, isLoading: false });
     }
-  }
+  };
 
   private deleteItemFromList = async event => {
     const indexToDelete = parseInt(event.currentTarget.value);
     const list = this.state.list;
-    delete list.items[indexToDelete]
-    updateList(this.state.list.id, list.items)
-    this.setState({list: list})
-  }
+    list.items.splice(indexToDelete, 1);
+    updateList(this.state.list.id, list.items);
+    this.setState({ list: list });
+  };
 
   private addItemToList = async () => {
     const list = this.state.list;
-    list.items.push(this.state.userInput)
-    updateList(this.state.list.id, list.items)
-    this.setState({list: list, userInput: ""})
-  }
+    list.items.push(this.state.userInput);
+    updateList(this.state.list.id, list.items);
+    this.setState({ list: list, userInput: '' });
+  };
 
   private handleUserInput = async input => {
-    this.setState({userInput: input.target.value})
-  }
+    this.setState({ userInput: input.target.value });
+  };
 
   private renderListView = () => {
     return (
-    <Grid justify="center" alignItems="center">
-      <InputBase onChange={this.handleUserInput} value={this.state.userInput} placeholder="Add Todo"/>
-      <IconButton onClick={this.addItemToList} type="submit" aria-label="add-circle">
-        <AddCircleOutlineIcon />
-      </IconButton>
-          <Card>
-            <CardHeader title='List View' />
-            <CardContent>
-              <List>
-                {this.state.list.items.map((listItem, listItemIndex) => (
-                  <ListItem key={listItemIndex}>
-                      <ListItemText primary={listItem}/>
-                    <ListItemSecondaryAction>
-                    <IconButton value={listItemIndex} onClick={this.deleteItemFromList} edge="end" aria-label="delete">
+      <Grid justify='center' alignItems='center'>
+        <InputBase onChange={this.handleUserInput} value={this.state.userInput} placeholder='Add Todo' />
+        <IconButton onClick={this.addItemToList} type='submit' aria-label='add-circle'>
+          <AddCircleOutlineIcon />
+        </IconButton>
+        <Card>
+          <CardHeader title='List View' />
+          <CardContent>
+            <List>
+              {this.state.list.items.map((listItem, listItemIndex) => (
+                <ListItem key={listItemIndex}>
+                  <ListItemText primary={listItem} />
+                  <ListItemSecondaryAction>
+                    <IconButton value={listItemIndex} onClick={this.deleteItemFromList} edge='end' aria-label='delete'>
                       <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-          </Card>
-    </Grid>
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
+      </Grid>
     );
-  }
+  };
 
   public render = () => {
     // If no list id is in the path, tell user to pass one
-    if (! this.props.match.params.listId) {
-        return <div>Supply list ID please</div>;
+    if (!this.props.match.params.listId) {
+      return <div>Supply list ID please</div>;
     }
 
     // If a user ID is passed, show loading till the list is being fetched
@@ -100,7 +100,7 @@ export class Home extends React.Component<any, IState> {
 
     // Show List if found
     if (this.state.list) {
-        return this.renderListView()
+      return this.renderListView();
     }
-  }
+  };
 }

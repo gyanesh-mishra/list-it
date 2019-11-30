@@ -3,7 +3,7 @@ import { Configuration } from 'webpack';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import cssnano from 'cssnano';
 
-import { SERVER_PORT, IS_DEV, WEBPACK_PORT } from './src/server/config';
+import { IS_DEV, WEBPACK_PORT } from './src/server/config';
 
 const plugins = [new ManifestPlugin()];
 
@@ -73,12 +73,10 @@ const config: Configuration = {
   },
   devServer: {
     port: WEBPACK_PORT,
-    open: IS_DEV,
-    openPage: `http://localhost:${SERVER_PORT}`
   },
   plugins,
   externals: {
-    'react': 'React',
+    react: 'React',
     'react-dom': 'ReactDOM',
   },
 };

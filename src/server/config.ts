@@ -23,9 +23,9 @@ const DB_CONFIG: PostgresConnectionOptions = {
   username: 'postgres',
   password: 'password',
   database: 'listit',
-  entities: [__dirname + '/database/entity/*.ts'],
+  entities: [__dirname + '/database/entity/*.js'],
   synchronize: true,
-  logging: false,
+  logging: IS_DEV,
 };
 
 // server
