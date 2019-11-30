@@ -9,7 +9,7 @@ export const App = () => (
   <BrowserRouter>
     <Grid container spacing={2}>
       <Switch>
-        <Route exact path='/' component={Home} />
+        <Route exact path='/:listId?' component={Home} />
       </Switch>
     </Grid>
   </BrowserRouter>

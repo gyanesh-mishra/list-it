@@ -1,5 +1,4 @@
-import { IListItemDTO } from "./IListItemDTO";
-
 export interface IListDTO {
-  items: IListItemDTO[];
+  id: string;
+  items: string[];
 }
