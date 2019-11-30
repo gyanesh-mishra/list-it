@@ -1,23 +1,13 @@
-import { IUserDTO } from '../shared/IUserDTO';
+import { IListDTO } from '../shared/typings/IListDTO';
 
-export const users: IUserDTO[] = [
-  {
-    imageUrl: '/statics/gil.jpg',
-    userId: '1',
-    userName: 'Gil Amran',
-  },
-  {
-    imageUrl: '/statics/noa.jpg',
-    userId: '2',
-    userName: 'Noa Tevel',
-  },
-  {
-    imageUrl: '/statics/john.jpg',
-    userId: '3',
-    userName: 'John Doe',
-  },
-];
+export const list: IListDTO = {
+  items : [
+    {content : "Best 1st List in API"},
+    {content : "Best second List in API"},
+    {content : "Best thIRd List in API"}
+  ]
+};
 
-export function getUserById(userId: string): IUserDTO {
-  return users.find(u => u.userId === userId);
+export function getListById(id : string): IListDTO {
+  return list
 }

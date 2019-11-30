@@ -1,18 +1,18 @@
 import bodyParser from 'body-parser';
 import { Router } from 'express';
-import { users, getUserById } from '../db';
+import { getListById } from '../db';
 
 export function apiRouter() {
   const router = Router();
   router.use(bodyParser.json());
 
-  router.get('/api/users', (req, res) => {
-    res.json(users);
+  router.get('/api/list', (req, res) => {
+    res.json(getListById("!"));
   });
 
-  router.get('/api/user/:userId', (req, res) => {
-    const userId = req.params.userId;
-    res.json(getUserById(userId));
+  router.get('/api/list/:listId', (req, res) => {
+    const listId = req.params.listId;
+    res.json(getListById(listId));
   });
 
   router.post('/api/set-user', (req, res) => {
