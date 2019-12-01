@@ -5,7 +5,7 @@ CustomAxios helps implement interceptors at the request level
 before it even reaches any of the handlers.
 
 Currently if the server returns any error codes over 500, we retry the request every 2 seconds
-until success
+until success or MAX_RETRIES has been reached.
 
 // TODO: Implement axios-retry library once the custom config is fixed.
 Alternatively, Implement custom exponential back-off once the custom config flags are fixed.
