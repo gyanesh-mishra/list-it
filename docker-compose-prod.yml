@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  ####################### App Definition #######################
+  list-it-app:
+    restart: always
+    container_name: list-it-app
+    build:
+      context: .
+    command: ['npm', 'run', 'start']
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+      - DB_PORT=5432
+      - DB_NAME=listit
+      - DB_HOST=list-it-database
+      - DB_USERNAME=${POSTGRES_USER:-postgres}
+      - DB_PASSWORD=${POSTGRES_USER:-password}
+    ports:
+      - 3000:3000
+    depends_on:
+      - list-it-database
+    networks:
+      - default
+
+  ####################### Database Definition #######################
+  list-it-database:
+    container_name: list-it-database
+    image: postgres:11.6
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_USER:-password}
+      - POSTGRES_DB=listit
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - default
+
+####################### Networks Definition #######################
+networks:
+  default:
+    driver: bridge
+
+####################### Volumes Definition #######################
+volumes:
+  postgres-data:

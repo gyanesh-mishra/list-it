@@ -59,6 +59,9 @@ export class ListView extends React.Component<any, IState> {
   // addItemToList adds an item to the bottom of the list when the Add button is clicked.
   private addItemToList = async () => {
     // Add the item from the input and update the API and state
+    if (this.state.userInput.trim() === '') {
+      return;
+    }
     const list = this.state.list;
     list.items.push(this.state.userInput);
     this.updateListItems(list.items);

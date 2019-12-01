@@ -3,12 +3,9 @@ import { Configuration } from 'webpack';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import cssnano from 'cssnano';
 
-import { IS_DEV, WEBPACK_PORT } from './src/server/config';
+import { IS_DEV } from './src/server/config';
 
 const plugins = [new ManifestPlugin()];
-
-// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-// plugins.push(new BundleAnalyzerPlugin());
 
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
@@ -72,7 +69,7 @@ const config: Configuration = {
     ],
   },
   devServer: {
-    port: WEBPACK_PORT,
+    host: '0.0.0.0',
   },
   plugins,
   externals: {

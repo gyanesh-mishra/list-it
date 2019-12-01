@@ -5,7 +5,7 @@ import React from 'react';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-// a little function to help us with reordering the result
+// Reorder is a helper function that reorders items in an array
 const reorder = (list: string[], startIndex: number, endIndex: number): string[] => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -14,7 +14,6 @@ const reorder = (list: string[], startIndex: number, endIndex: number): string[]
   return result;
 };
 
-// TODO: Add Proptypes validation
 export class ListItems extends React.Component<any> {
   constructor(props) {
     super(props);

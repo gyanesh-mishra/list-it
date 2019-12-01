@@ -1,41 +1,36 @@
-# FAST FullStack React with TypeScript starter kit.
+# List-it!
 
-<img src="https://github.com/gilamran/fullstack-typescript/raw/master/assets/images/logo.png" width="150">
+One stop shop to create and share lists of anything! World is your oyster.
 
 ---
 
 ## Quick Start
 
+You'll need [Docker](https://www.docker.com/products/developer-tools) for development.
+The Project uses [Makefile](https://opensource.com/article/18/8/what-how-makefile) syntax to simplify series of commands.
+
+All \*nix based systmes (Linux, OSX) should come installed with them. There's also a Windows option called Nmake but ever since
+[WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) came out, I'd recommend using that.
+
+You can also just choose to use manual postgres installation and manual node setup but I prefer keeping things containerized.
+
 Just clone this repository into your own project folder. and start working
 
 ```bash
-git clone https://github.com/gilamran/fullstack-typescript.git <MyProjectName>
-cd <MyProjectName>
-npm install
-npm run dev
+git clone https://github.com/gyanesh-mishra/list-it
+cd list-it
+make build
+make app
 ```
 
-If you want to detach from this repository into your own repository do this:
+Here are some other Makefile commands to help with development.
+`make run` : Launches the application using docker (Builds the images if they haven't been built before)
 
-```bash
-git remote remove origin
-git remote add origin YOUR_REPO_URL
-git push -u origin master
-```
+`make stop` : Stops any running containers
 
-## Why
+`make build` : (Re-)Builds container images listed in the docker-compose.
 
-- **Simple** to jump into, **Fast** because it is simple.
-- Separate `tsconfig.json` for client and server.
-- Client and server can share code (And types). For example: [IUserDTO.d.ts](https://github.com/gilamran/fullstack-typescript/blob/master/src/shared/IUserDTO.d.ts)
-- The client is bundled using [Webpack](https://webpack.github.io/) because it goes to the browser.
-- The server is emitted by [TypeScript](https://github.com/Microsoft/TypeScript) because node 6 supports es6.
-
-<p align="center"> 
-<img src="https://github.com/gilamran/fullstack-typescript/raw/master/assets/images/flow.png" width="500">
-</p>
-
----
+`make clean` : Purges containers, images and volumes.
 
 ### Directory Layout
 
@@ -55,44 +50,12 @@ git push -u origin master
 ├── .nvmrc                  # Force nodejs version
 ├── .env                    # (ignored) Can be used to override environment variables
 ├── package.json            # The list of 3rd party libraries and utilities
+├── Dockerfile              # Dockerfile to build container image
+├── docker-compose.yml      # docker-compose configuration to orchestrate containers for local development
+├── docker-compose-prod.yml # docker-compose configuration to orchestrate containers for production environment
 └── tslint.json             # TypeScript linting configuration file
 ├── README.md               # This file
 ```
-
-### What's included
-
-- [React v16](https://facebook.github.io/react/)
-- [React router v4](https://github.com/ReactTraining/react-router)
-- [Material-ui](https://github.com/mui-org/material-ui)
-- [Jest](https://github.com/facebook/jest)
-- [Styled Components](https://github.com/styled-components/styled-components)
-- [Axios](https://github.com/mzabriskie/axios) (For Client/Server communication)
-
-### Usage
-
-- `npm run dev` - Client and server are in watch mode with source maps, opens [http://localhost:3000](http://localhost:3000)
-- `npm run test` - Runs jest tests
-- `npm run link` - Runs es-lint
-- `npm run build` - `dist` folder will include all the needed files, both client (Bundle) and server.
-- `npm start` - Just runs `node ./dist/server/server.js`
-- `npm start:prod` - sets `NODE_ENV` to `production` and then runs `node ./dist/server/server.js`. (Bypassing webpack proxy)
-
-### Config
-
-All applications require a config mechanism, for example, `SLACK_API_TOKEN`. Things that you don't want in your git history, you want a different environment to have different value (dev/staging/production). This repo uses the file `config.ts` to access all your app variables. And a `.env` file to override variable in dev environment. This file is ignored from git.
-
----
-
-#### What's not included
-
-- Universal (Server side rendering)
-- Redux/MobX (State management)
-
-#### Requirements
-
-- Node +10.17.0
-
----
 
 #### Licence
 
