@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './CustomAxios';
 import { IListDTO } from '../../shared/typings/IListDTO';
 
 /*
@@ -18,7 +18,7 @@ export function getList(id: string) {
     })
     .catch(err => {
       // Return null if the error is 404, so a new object can be created
-      if (err.response.status === 404) {
+      if (err.response && err.response.status === 404) {
         return null;
       }
       return err;

@@ -46,6 +46,11 @@ export class ListView extends React.Component<any, IState> {
       response = await ListAPI.createList(listId, []);
     }
 
+    // If there are no items, uncaught error etc. Don't do anything
+    if (response.items === undefined) {
+      return;
+    }
+
     // Show the result
     this.setState({ list: response, isLoading: false, newList: newList });
   };
@@ -89,7 +94,12 @@ export class ListView extends React.Component<any, IState> {
     const list = this.state.list;
     list.items = items;
 
-    await ListAPI.updateList(this.state.list.id, list.items);
+    const response = await ListAPI.updateList(this.state.list.id, list.items);
+
+    // If there are no items, uncaught error etc. Don't do anything
+    if (response.items === undefined) {
+      return;
+    }
     this.setState({ list: list, updating: false });
   };
 
