@@ -4,7 +4,22 @@ One stop shop to create and share lists of anything! World is your oyster.
 
 ---
 
-## Quick Start
+## Application Use
+
+The application flow is as follows:
+
+1. Navigate to http://localhost:3000/list/<LIST_ID>
+
+   LIST_ID can be any alphanumeric ID that is easy for you to remember.
+   For e.g. if your LIST_ID is best-id-123 the URL would be http://localhost:3000/list/best-id-123
+
+2. If a list exists, you'll be presented with the items in the list. If however, a list doesn't exist with that ID, a new one will be created for you.
+
+3. Enjoy! Add, Remove, Drag items in your list as your feel and when you come back later, it'll be there just as you left it.
+
+---
+
+## Development
 
 You'll need [Docker](https://www.docker.com/products/developer-tools) for development.
 The Project uses [Makefile](https://opensource.com/article/18/8/what-how-makefile) syntax to simplify series of commands.
@@ -32,7 +47,22 @@ Here are some other Makefile commands to help with development.
 
 `make clean` : Purges containers, images and volumes.
 
-### Directory Layout
+NOTE: Port 5432 and 3000 must be free on your host machine for the containers to attach to them.
+
+### Environment file
+
+There is an .env.example file present in the root to help create a .env file. Currently, the application has fallbacks for any missing environment variables and can work without it.
+However, for if you want, you can define your own set of configurations in the .env file and it'll be picked up the application and the docker-compose file/
+
+---
+
+## Architecture
+
+![Architecture Diagram](list-it-arch.png)
+
+---
+
+## Directory Layout
 
 ```bash
 .
@@ -56,6 +86,8 @@ Here are some other Makefile commands to help with development.
 └── tslint.json             # TypeScript linting configuration file
 ├── README.md               # This file
 ```
+
+---
 
 #### Licence
 
