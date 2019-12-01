@@ -1,5 +1,5 @@
 import { Paper, CircularProgress, Button } from '@material-ui/core';
-import { Backup, Delete } from '@material-ui/icons';
+import { Backup, Delete, Event } from '@material-ui/icons';
 import React from 'react';
 import { IListDTO } from '../../shared/typings/IListDTO';
 import * as ListAPI from '../api/list';
@@ -59,7 +59,7 @@ export class ListView extends React.Component<any, IState> {
   // addItemToList adds an item to the bottom of the list when the Add button is clicked.
   private addItemToList = async () => {
     // Add the item from the input and update the API and state
-    if (this.state.userInput.trim() === '') {
+    if (this.state.userInput.trim().length === 0) {
       return;
     }
     const list = this.state.list;

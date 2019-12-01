@@ -18,7 +18,7 @@ const { version: VERSION } = PackageJson;
 // database
 const DB_CONFIG: PostgresConnectionOptions = {
   type: 'postgres',
-  host: process.env.DB_HOST || 'localhost',
+  host: process.env.DB_HOST || '0.0.0.0',
   port: parseInt(process.env.DB_PORT) || 5432,
   username: process.env.DB_USERNAME || 'postgres',
   password: process.env.DB_PASSWORD || 'password',
@@ -30,5 +30,6 @@ const DB_CONFIG: PostgresConnectionOptions = {
 
 // server
 const SERVER_PORT = process.env.PORT || 3000;
+const WEBPACK_PORT = process.env.WEBPACK_PORT || 8080;
 
-export { IS_DEV, VERSION, SERVER_PORT, DB_CONFIG };
+export { IS_DEV, VERSION, SERVER_PORT, DB_CONFIG, WEBPACK_PORT };
