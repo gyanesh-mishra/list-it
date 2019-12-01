@@ -1,6 +1,6 @@
-import { Grid, TextField, IconButton } from '@material-ui/core';
+import { Grid, TextField, Button } from '@material-ui/core';
 import React from 'react';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { Add } from '@material-ui/icons';
 
 export class AddListItem extends React.Component<any> {
   public render = () => {
@@ -16,9 +16,15 @@ export class AddListItem extends React.Component<any> {
           />
         </Grid>
         <Grid xs={2} md={1} item>
-          <IconButton onClick={this.props.handleAddListItem} type='submit' aria-label='add-circle'>
-            <AddCircleOutlineIcon fontSize='large' />
-          </IconButton>
+          <Button
+            onClick={this.props.handleAddListItem}
+            type='submit'
+            variant='contained'
+            color='primary'
+            startIcon={<Add />}
+          >
+            Add
+          </Button>
         </Grid>
       </Grid>
     );

@@ -1,5 +1,5 @@
-import { Paper, CircularProgress } from '@material-ui/core';
-import { Backup } from '@material-ui/icons';
+import { Paper, CircularProgress, Button } from '@material-ui/core';
+import { Backup, Delete } from '@material-ui/icons';
 import React from 'react';
 import { IListDTO } from '../../shared/typings/IListDTO';
 import * as ListAPI from '../api/list';
@@ -67,6 +67,14 @@ export class ListView extends React.Component<any, IState> {
     this.setState({ userInput: '' });
   };
 
+  // resetList removes all items from the list when the reset button is clicked.
+  private resetList = async () => {
+    // Add the item from the input and update the API and state
+    const list = this.state.list;
+    list.items = [];
+    this.updateListItems(list.items);
+  };
+
   // updateListItems updates the state and API and displays a loading icon on top right of screen.
   private updateListItems = async items => {
     this.setState({ updating: true });
@@ -97,6 +105,9 @@ export class ListView extends React.Component<any, IState> {
           deleteItemFromList={this.deleteItemFromList}
           updateListItems={this.updateListItems}
         />
+        <Button onClick={this.resetList} variant='contained' color='secondary' startIcon={<Delete />}>
+          Reset
+        </Button>
       </Paper>
     );
   };
