@@ -9,8 +9,8 @@ One stop shop to create and share lists of anything! World is your oyster.
 You'll need [Docker](https://www.docker.com/products/developer-tools) for development.
 The Project uses [Makefile](https://opensource.com/article/18/8/what-how-makefile) syntax to simplify series of commands.
 
-All \*nix based systmes (Linux, OSX) should come installed with them. There's also a Windows option called Nmake but ever since
-[WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) came out, I'd recommend using that.
+All \*nix based systmes (Linux, OSX) should come installed with `make`. There's also a Windows option called `Nmake` but now that
+[WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) is out, I'd recommend using that.
 
 You can also just choose to use manual postgres installation and manual node setup but I prefer keeping things containerized.
 
