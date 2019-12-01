@@ -1,15 +1,16 @@
-import { Paper, Grid, TextField } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
+import { Paper, CircularProgress } from '@material-ui/core';
+import { Backup } from '@material-ui/icons';
 import React from 'react';
 import { IListDTO } from '../../shared/typings/IListDTO';
 import * as ListAPI from '../api/list';
 import { NewListDialog } from './NewListDialog';
 import { ListItems } from './ListItems';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { AddListItem } from './AddListItem';
 
 interface IState {
   list: IListDTO;
   newList: boolean;
+  updating: boolean;
   userInput: string;
   isLoading: boolean;
 }
@@ -20,6 +21,7 @@ export class ListView extends React.Component<any, IState> {
     this.state = {
       list: null,
       newList: false,
+      updating: false,
       userInput: '',
       isLoading: true,
     };
@@ -30,66 +32,66 @@ export class ListView extends React.Component<any, IState> {
     const listId = this.props.match.params.listId;
 
     // Fetch the list from the API
-    let list = await ListAPI.getListById(listId);
-    let newList = this.state.newList;
+    let response = await ListAPI.getListById(listId);
+    let newList = false;
 
     // If List doesn't exist on the API, create a new one and show prompt
-    if (list === null) {
+    if (response === null) {
       newList = true;
-      list = await ListAPI.createList(listId, []);
+      response = await ListAPI.createList(listId, []);
     }
 
-    // Show the list
-    this.setState({ list: list, isLoading: false, newList: newList });
+    // Show the result
+    this.setState({ list: response, isLoading: false, newList: newList });
   };
 
+  // deleteItemFromList deletes an item from the list when the button is clicked.
   private deleteItemFromList = async event => {
+    // Fetch index of the element on the list
     const indexToDelete = parseInt(event.currentTarget.value);
+
+    // Delete from the list and issue update on the API and state
     const list = this.state.list;
     list.items.splice(indexToDelete, 1);
-    ListAPI.updateList(this.state.list.id, list.items);
-    this.setState({ list: list });
+    this.updateListItems(list.items);
   };
 
+  // addItemToList adds an item to the bottom of the list when the Add button is clicked.
   private addItemToList = async () => {
+    // Add the item from the input and update the API and state
     const list = this.state.list;
     list.items.push(this.state.userInput);
-    ListAPI.updateList(this.state.list.id, list.items);
-    this.setState({ list: list, userInput: '' });
+    this.updateListItems(list.items);
+
+    // Reset the input box to be an empty string
+    this.setState({ userInput: '' });
   };
 
+  // updateListItems updates the state and API and displays a loading icon on top right of screen.
   private updateListItems = async items => {
+    this.setState({ updating: true });
     const list = this.state.list;
     list.items = items;
 
-    ListAPI.updateList(this.state.list.id, list.items);
-    this.setState({ list: list });
+    await ListAPI.updateList(this.state.list.id, list.items);
+    this.setState({ list: list, updating: false });
   };
 
-  private handleUserInput = async input => {
-    this.setState({ userInput: input.target.value });
+  // handleInputChange takes the current Input box input and stores it in the state for future use.
+  private handleInputChange = async event => {
+    this.setState({ userInput: event.target.value });
   };
 
   private renderListView = () => {
     return (
       <Paper style={{ width: '90%', margin: 16, padding: 16 }}>
         {this.state.newList && <NewListDialog />}
-        <Grid container>
-          <Grid xs={10} md={11} item>
-            <TextField
-              onChange={this.handleUserInput}
-              value={this.state.userInput}
-              placeholder='Add Todo'
-              style={{ width: '80%' }}
-              fullWidth
-            />
-          </Grid>
-          <Grid xs={2} md={1} item>
-            <IconButton onClick={this.addItemToList} type='submit' aria-label='add-circle'>
-              <AddCircleOutlineIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
+        <AddListItem
+          value={this.state.userInput}
+          handleAddListItem={this.addItemToList}
+          handleInputChange={this.handleInputChange}
+        />
+        {this.state.updating && <Backup style={{ position: 'absolute', top: 10, right: 10 }} />}
         <ListItems
           list={this.state.list}
           deleteItemFromList={this.deleteItemFromList}
@@ -102,7 +104,7 @@ export class ListView extends React.Component<any, IState> {
   public render = () => {
     // Show loading while the List is being fetched
     if (this.state.isLoading) {
-      return <div>Loading...</div>;
+      return <CircularProgress />;
     }
 
     // Render ListView on successful fetch
