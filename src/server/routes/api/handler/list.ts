@@ -11,7 +11,7 @@ export async function handleGET(req: Request, res: Response) {
     const list: List = await listRepository.findOneOrFail(listId);
     res.json(list);
   } catch (id) {
-    res.status(204).json({ message: 'List not found' });
+    res.status(404).json({ message: 'List not found' });
   }
 }
 
@@ -44,6 +44,6 @@ export async function handlePUT(req: Request, res: Response) {
     await listRepository.save(list);
     res.json(list);
   } catch (id) {
-    res.status(204).json({ message: 'Cannot update list' });
+    res.status(500).json({ message: 'Cannot update list' });
   }
 }

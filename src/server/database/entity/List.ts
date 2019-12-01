@@ -6,6 +6,6 @@ export class List implements IListDTO {
   @PrimaryColumn()
   id: string;
 
-  @Column({ type: 'text', array: true, nullable: true })
+  @Column({ type: 'text', array: true, default: () => 'ARRAY[]::text[]' })
   items: string[];
 }
