@@ -3,6 +3,12 @@ import { getRepository } from 'typeorm';
 
 import { List } from '../../../database/entity/List';
 
+/*
+API Handler for the the /api/list/<LIST_ID> router.
+*/
+
+// Handles incoming GET Requests
+// Given a valid LIST_ID return the object or return not found.
 export async function handleGET(req: Request, res: Response) {
   const listRepository = getRepository(List);
   const listId = req.params.listId;
@@ -15,6 +21,8 @@ export async function handleGET(req: Request, res: Response) {
   }
 }
 
+// Handles incoming POST Requests
+// Given a valid LIST_ID and body return the newly created object or throw an error if it already exists.
 export async function handlePOST(req: Request, res: Response) {
   const listRepository = getRepository(List);
   const listId = req.params.listId;
@@ -26,13 +34,15 @@ export async function handlePOST(req: Request, res: Response) {
   try {
     await listRepository.save(newList);
   } catch (e) {
-    res.status(409).send('list already in database');
+    res.status(409).json({ message: 'List already exists' });
     return;
   }
 
   res.status(201).json(newList);
 }
 
+// Handles incoming PUT Requests
+// Given a valid LIST_ID and body, return the updated list object or throw an error.
 export async function handlePUT(req: Request, res: Response) {
   const listRepository = getRepository(List);
   const listId = req.params.listId;

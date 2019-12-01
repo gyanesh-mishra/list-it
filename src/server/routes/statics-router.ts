@@ -3,6 +3,14 @@ import express from 'express';
 import { Router } from 'express';
 import { IS_DEV, WEBPACK_PORT } from '../config';
 
+/*
+Router definition for webpack static files.
+If the application is in DEV mode, webpack-dev-server builds assets and runs them on 8080 internally,
+so the server uses a proxy path for those.
+
+If Production mode, serve directly from /dist directory.
+*/
+
 export function staticsRouter() {
   const router = Router();
 

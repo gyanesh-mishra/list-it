@@ -2,6 +2,10 @@ import { Grid, TextField, Button } from '@material-ui/core';
 import React from 'react';
 import { Add } from '@material-ui/icons';
 
+/*
+AddListItem component contains an input field and a button to submit input field result.
+*/
+
 export class AddListItem extends React.Component<any> {
   public render = () => {
     return (

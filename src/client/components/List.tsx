@@ -7,6 +7,11 @@ import { NewListDialog } from './NewListDialog';
 import { ListItems } from './ListItems';
 import { AddListItem } from './AddListItem';
 
+/*
+List component is the main parent component of the of the application to handle all operations
+related to CRUD-ing a list.
+*/
+
 interface IState {
   list: IListDTO;
   newList: boolean;
@@ -32,7 +37,7 @@ export class ListView extends React.Component<any, IState> {
     const listId = this.props.match.params.listId;
 
     // Fetch the list from the API
-    let response = await ListAPI.getListById(listId);
+    let response = await ListAPI.getList(listId);
     let newList = false;
 
     // If List doesn't exist on the API, create a new one and show prompt

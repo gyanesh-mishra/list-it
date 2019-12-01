@@ -2,6 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import { IS_DEV, WEBPACK_PORT } from '../config';
 
+/*
+Router definition for webpack manifest request.
+If the application is in DEV mode, webpack-dev-server builds assets and runs them on 8080 internally,
+so the server uses a proxy path for those.
+
+If Production mode, serve directly from /dist directory.
+*/
+
 function getManifestFromWebpack(): Promise<any> {
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires

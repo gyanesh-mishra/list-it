@@ -1,6 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
+/*
+Home is the landing page of the site and provides users with some useful information.
+*/
 export class Home extends React.Component<any> {
   public render = () => {
     return (

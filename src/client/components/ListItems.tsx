@@ -5,6 +5,11 @@ import React from 'react';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
+/*
+ListItems component handles displaying individual list items and manages the process around drag/drop
+and deleting the list.
+*/
+
 // Reorder is a helper function that reorders items in an array
 const reorder = (list: string[], startIndex: number, endIndex: number): string[] => {
   const result = Array.from(list);

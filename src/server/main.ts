@@ -15,10 +15,6 @@ import { staticsRouter } from './routes/statics-router';
 createConnection(config.DB_CONFIG)
   .then(connection => {
     // Instantiate the server if DB connection is successful
-    console.log(`*******************************************`);
-    console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-    console.log(`config: ${JSON.stringify(config, null, 2)}`);
-    console.log(`*******************************************`);
 
     const app = express();
     app.set('view engine', 'ejs');

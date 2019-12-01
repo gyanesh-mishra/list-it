@@ -1,6 +1,10 @@
 import { Dialog, DialogContent, DialogTitle, Button, DialogActions, Typography } from '@material-ui/core';
 import React from 'react';
 
+/*
+NewListDialog component is an informative dialog to be displayed when a new list is created.
+*/
+
 interface IState {
   open: boolean;
 }
