@@ -1,11 +1,12 @@
 import { Paper, CircularProgress, Button } from '@material-ui/core';
-import { Backup, Delete, Event } from '@material-ui/icons';
+import { Backup, Delete } from '@material-ui/icons';
 import React from 'react';
 import { IListDTO } from '../../shared/typings/IListDTO';
 import * as ListAPI from '../api/list';
 import { NewListDialog } from './NewListDialog';
 import { ListItems } from './ListItems';
 import { AddListItem } from './AddListItem';
+import { blue } from '@material-ui/core/colors';
 
 /*
 List component is the main parent component of the of the application to handle all operations
@@ -117,7 +118,10 @@ export class ListView extends React.Component<any, IState> {
           handleAddListItem={this.addItemToList}
           handleInputChange={this.handleInputChange}
         />
-        {this.state.updating && <Backup style={{ position: 'absolute', top: 10, right: 10 }} />}
+        {this.state.updating && <Backup style={{ color: blue[500], position: 'absolute', top: 10, right: 10 }} />}
+        {this.state.updating && (
+          <CircularProgress style={{ color: blue[500], position: 'absolute', top: 4, right: 4 }} />
+        )}
         <ListItems
           list={this.state.list}
           deleteItemFromList={this.deleteItemFromList}

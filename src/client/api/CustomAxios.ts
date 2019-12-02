@@ -33,6 +33,7 @@ instance.interceptors.response.use(
     } = error;
 
     // If the request has failed check if it's the first failure, if not, note the failure count.
+    // Store the count in the request header
     const originalRequest = config;
     const current_retry_count =
       originalRequest.headers.retry_count === undefined ? 1 : originalRequest.headers.retry_count + 1;
