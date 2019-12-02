@@ -7,7 +7,7 @@ services:
     container_name: list-it-app
     build:
       context: .
-    command: ['npm', 'run', 'start']
+    command: ['npm', 'run', 'start:prod']
     environment:
       - HOST=0.0.0.0
       - PORT=3000
