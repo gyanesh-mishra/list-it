@@ -39,6 +39,7 @@ make app
 ```
 
 Here are some other Makefile commands to help with development.
+
 `make run` : Launches the application using docker (Builds the images if they haven't been built before)
 
 `make stop` : Stops any running containers
@@ -52,7 +53,7 @@ NOTE: Port 5432 and 3000 must be free on your host machine for the containers to
 ### Environment file
 
 There is an .env.example file present in the root to help create a .env file. Currently, the application has fallbacks for any missing environment variables and can work without it.
-However, for if you want, you can define your own set of configurations in the .env file and it'll be picked up the application and the docker-compose file/
+However, for if you want, you can define your own set of configurations in the .env file and it'll be picked up the application and the docker-compose file.
 
 ---
 
