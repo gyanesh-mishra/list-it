@@ -13,10 +13,14 @@ export async function handleGET(req: Request, res: Response) {
   const listRepository = getRepository(List);
   const listId = req.params.listId;
 
+  if (listId === undefined || listId === null) {
+    res.status(400).json({ message: 'Please provide a valid list ID' });
+  }
+
   try {
     const list: List = await listRepository.findOneOrFail(listId);
     res.json(list);
-  } catch (id) {
+  } catch (error) {
     res.status(404).json({ message: 'List not found' });
   }
 }
@@ -26,6 +30,11 @@ export async function handleGET(req: Request, res: Response) {
 export async function handlePOST(req: Request, res: Response) {
   const listRepository = getRepository(List);
   const listId = req.params.listId;
+
+  if (listId === undefined || listId === null) {
+    res.status(400).json({ message: 'Please provide a valid list ID' });
+  }
+
   const listItems = req.body.items;
   const newList = new List();
   newList.id = listId;
@@ -38,6 +47,7 @@ export async function handlePOST(req: Request, res: Response) {
     return;
   }
 
+  // Success
   res.status(201).json(newList);
 }
 
@@ -48,12 +58,27 @@ export async function handlePUT(req: Request, res: Response) {
   const listId = req.params.listId;
   const listItems = req.body.items;
 
+  if (listId === undefined || listId === null) {
+    res.status(400).json({ message: 'Please provide a valid list ID' });
+  }
+
+  let list: List;
+
+  // Look for the list in the database
   try {
-    const list: List = await listRepository.findOneOrFail(listId);
+    list = await listRepository.findOneOrFail(listId);
+  } catch (error) {
+    res.status(500).json({ message: 'Could not find list' });
+  }
+
+  // Update the list items
+  try {
     list.items = listItems;
     await listRepository.save(list);
-    res.json(list);
-  } catch (id) {
-    res.status(500).json({ message: 'Cannot update list' });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal Server Error while updating list' });
   }
+
+  // Success
+  res.json(list);
 }
