@@ -14,11 +14,11 @@ related to CRUD-ing a list.
 */
 
 interface IState {
-  list: IListDTO;
-  newList: boolean;
-  updating: boolean;
-  userInput: string;
-  isLoading: boolean;
+  list: IListDTO; // Current list
+  newList: boolean; // Check if the current list is new or existing, to display the modal
+  updating: boolean; // Check if the current changes have been synced with the API
+  userInput: string; // Keep track of the current user input on the input field
+  isLoading: boolean; // Initial page load
 }
 
 export class ListView extends React.Component<any, IState> {
