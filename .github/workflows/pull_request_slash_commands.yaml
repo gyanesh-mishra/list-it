@@ -12,9 +12,24 @@ jobs:
       - name: Set predibase alias output
         id: setOutputs
         run: |
-          export PR_URL="${{ github.event.issue.pull_request.url }}"
-          export PR=${PR_URL##*/}
+          PR_URL="${{ github.event.issue.pull_request.url }}"
+          PR=${PR_URL##*/}
           echo "$PR"
-          echo ${PR_URL##*/}
+          echo "$PR_URL"
           echo "PREDIBASE_ALIAS=pr-$PR" >> $GITHUB_OUTPUT
           echo "PR=$PR" >> $GITHUB_OUTPUT
+    outputs:
+        PREDIBASE_ALIAS: ${{ steps.setOutputs.outputs.PREDIBASE_ALIAS }}
+        PR: ${{ steps.setOutputs.outputs.PR }}
+
+  update_comment:
+    name: update comment
+    needs: [check_comment]
+    if: github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    steps:
+        - name: Set predibase alias output
+          run: |
+            echo "${{ needs.check_comment.outputs.PREDIBASE_ALIAS }}"
+            echo "${{ needs.check_comment.outputs.PR }}"
+            
