@@ -1,0 +1,18 @@
+name: pull_request_slash_commands
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  check_comment:
+    name: Check comment source and setup PR variables.
+    if: github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set predibase alias output
+        id: setOutputs
+        run: |
+          PR_URL="${{ github.event.issue.pull_request.url }}"
+          PR=${PR_URL##*/}
+          echo "PREDIBASE_ALIAS=pr-$PR" >> $GITHUB_OUTPUT
+          echo "PR=$PR" >> $GITHUB_OUTPUT
